@@ -29,14 +29,6 @@ def calcAndDrawHist(img_hsv):
     hist_h = cv2.calcHist([h], [0], None, [256], [0, 256])
     hist_s = cv2.calcHist([s], [0], None, [256], [0, 256])
     hist_v = cv2.calcHist([v], [0], None, [256], [0, 256])
-
-    for hist in [hist_h, hist_s, hist_v]:
-        minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(hist)
-        print(type(hist), ':')
-        print('minval:', minVal)
-        print('maxval:', maxVal)
-        print('minLoc:', minLoc)
-        print('maxLoc:', maxLoc)
     plt.plot(hist_h, color='r', label="h")
     plt.plot(hist_s, color='g', label="s")
     plt.plot(hist_v, color='b', label="v")
@@ -56,6 +48,7 @@ def showing(img, img_noised, img_gauss, img_canny, img_SuperBlured, img_final):
 
 
 if __name__ == "__main__":
+
     image = read_image()
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image_HSV = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
@@ -74,3 +67,19 @@ if __name__ == "__main__":
     image_final = cv2.subtract(image_noised, image_SuperBlured)
 
     showing(image, image_noised, image_gauss, image_canny, image_SuperBlured, image_final)
+
+    cap = cv2.VideoCapture(0)
+
+    while (True):
+        ret, frame = cap.read()
+        frame_noised = add_noise(frame)
+
+        frame_SuperBlured = gauss_filter(frame_noised, apert=(49, 49))
+        frame_final = cv2.subtract(frame_noised, frame_SuperBlured)
+        cv2.imshow('Video', frame_final)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
