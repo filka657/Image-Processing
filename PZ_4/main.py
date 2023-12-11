@@ -72,19 +72,19 @@ fone_score = []
 def creating_plots(accuracy, recall, precision, fone_score):
     fig, axes = plt.subplots(2, 2)
     fig.suptitle('Метрики валидации')
-    axes[0, 0].plot([int(i) for i in range(3)], accuracy)
+    axes[0, 0].plot([int(i) for i in range(10)], accuracy)
     axes[0, 0].set_title('Accuracy')
-    axes[0, 1].plot([int(i) for i in range(3)], recall)
+    axes[0, 1].plot([int(i) for i in range(10)], recall)
     axes[0, 1].set_title('Recall')
-    axes[1, 0].plot([int(i) for i in range(3)], precision)
+    axes[1, 0].plot([int(i) for i in range(10)], precision)
     axes[1, 0].set_title('Precision')
-    axes[1, 1].plot([int(i) for i in range(3)], fone_score)
+    axes[1, 1].plot([int(i) for i in range(10)], fone_score)
     axes[1, 1].set_title('F1 score')
 
     plt.show()
 
 
-for epoch in range(3):
+for epoch in range(10):
     running_loss = 0.0
     net.train()
     for i, data in enumerate(trainloader, 0):
