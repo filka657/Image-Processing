@@ -17,8 +17,8 @@ class SimpleNet(nn.Module):
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5)
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv2 = nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5)
-        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.conv3 = nn.Conv2d(in_channels=16, out_channels=64, kernel_size=5)
+        #self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+        #self.conv3 = nn.Conv2d(in_channels=16, out_channels=64, kernel_size=5)
         self.fc1 = nn.Linear(in_features=400, out_features=256)
         self.fc2 = nn.Linear(in_features=256, out_features=128)
         self.fc3 = nn.Linear(in_features=128, out_features=64)
@@ -27,10 +27,10 @@ class SimpleNet(nn.Module):
 
     def forward(self, x):
         x = self.pool1(F.relu(self.conv1(x)))
-        print(x.shape)
+        #print(x.shape)
         x = self.pool1(F.relu(self.conv2(x)))
-        print(x.shape)
-        x = self.pool2(F.relu(self.conv3(x)))
+        #print(x.shape)
+        #x = self.pool2(F.relu(self.conv3(x)))
         x = torch.flatten(x, 1) # flatten all dimensions except batch
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
